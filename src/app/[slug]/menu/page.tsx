@@ -1,7 +1,4 @@
-import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import RestaurantHeader from "./components/header";
 import RestaurantCategories from "./components/categories";
@@ -24,10 +21,14 @@ const RestaurantMenuPage = async ({
   if (!isConsumptionMethodValid(consumptionMethod)) {
     return notFound();
   }
-  const restaurant = await db.restaurant.findUnique({
+  const restaurant = await db.restaurant.findFirst({
     where: { slug },
     include: {
-      menuCategory: true,
+      menuCategory: {
+        include: {
+          products: true
+        }
+      }
     },
   });
   if (!restaurant) {
