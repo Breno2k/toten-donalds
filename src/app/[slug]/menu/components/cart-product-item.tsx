@@ -12,11 +12,12 @@ interface CartItemProps {
 }
 
 const CartProductItem = ({ product }: CartItemProps) => {
-    const { increaseProductQuantity, decreaseProductQuantity } = useContext(CartContext)
+    const { increaseProductQuantity, decreaseProductQuantity, removeProduct } = useContext(CartContext)
 
     return (
         <div className="flex items-center justify-between">
-            {/* ESQUERDA */}
+
+            {/* IMAGEM, NOME E PREÇO */}
             <div className="flex items-center gap-3">
                 <div className="relative h-20 w-20 rounded-xl bg-gray-100">
                     <Image src={product.imageUrl} alt={product.name} fill />
@@ -28,6 +29,7 @@ const CartProductItem = ({ product }: CartItemProps) => {
                     <p className="text-sm font-semibold">
                         {formatCurrency(product.price)}
                     </p>
+
                     {/* QUANTIDADE */}
                     <div className="flex items-center gap-1 text-center">
                         <Button className="h-7 w-7 rounded-lg" variant="outline" onClick={() => decreaseProductQuantity(product.id)}>
@@ -40,8 +42,9 @@ const CartProductItem = ({ product }: CartItemProps) => {
                     </div>
                 </div>
             </div>
+
             {/* BOTÃO DE DELETAR */}
-            <Button className="h-7 w-7 rounded-lg" variant="outline">
+            <Button className="h-7 w-7 rounded-lg" variant="outline" onClick={() => removeProduct(product.id)}>
                 <TrashIcon />
             </Button>
         </div>
