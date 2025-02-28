@@ -61,6 +61,8 @@ model Order {
   restaurant        Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId      String
   orderProducts     OrderProduct[]
+  customerName      String
+  customerCpf       String
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 }
@@ -78,7 +80,7 @@ model OrderProduct {
 }
 
 enum OrderStatus {
-  PEDING
+  PENDING
   IN_PREPARATION
   FINISHED
 }
